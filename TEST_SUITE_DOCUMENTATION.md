@@ -1,4 +1,3 @@
-Got it, bro. Here's the complete, properly formatted text. You can copy and paste it directly into Word or Notepad.
 
 # Quality Engineering Assessment
 
