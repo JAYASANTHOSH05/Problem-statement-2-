@@ -81,14 +81,6 @@ Checks whether the application can identify manuscript authors and correctly mat
 - Checks that empty or punctuation-only author tokens are rejected.
 - Tests whether the parser returns an empty author list when no valid author information is available.
 
-**Simple explanation:**
-
-This test file verifies that the application identifies the correct authors. It also prevents incorrect author matching when names or initials are ambiguous.
-
-**Interview explanation:**
-
-The `test_author_parser.py` file tests author extraction and matching. It covers full names, initials, grouped author names, ambiguous initials and unknown authors to ensure that contributions are not assigned to the wrong person.
-
 ### 3.3 test_contribution_parser.py
 
 **Purpose:**
@@ -114,14 +106,6 @@ Checks whether the application can identify contribution statements from differe
 - Tests identification of unknown authors appearing in tables.
 - Checks that unknown structured roles are retained with their original source information and diagnostic messages instead of being silently discarded.
 
-**Simple explanation:**
-
-Different manuscripts describe author contributions in different formats. This test file checks whether the application can extract those contributions and correctly associate them with the respective authors.
-
-**Interview explanation:**
-
-The `test_contribution_parser.py` file tests contribution extraction across different formats, including structured statements, paragraphs, tables, narrative text, grouped authors and headers or footers. It also checks multiple roles, missing sections and incorrect author attribution.
-
 ### 3.4 test_credit_normalizer.py
 
 **Purpose:**
@@ -141,13 +125,6 @@ Checks whether contribution descriptions can be correctly mapped to the official
 - Checks that empty contribution descriptions are rejected.
 - Ensures the application does not guess a role when the contribution wording is insufficient.
 
-**Simple explanation:**
-
-Authors may describe the same contribution using different words. This test file checks whether the application can recognize the wording and convert it into the correct standardized CRediT role.
-
-**Interview explanation:**
-
-The `test_credit_normalizer.py` file verifies the mapping of contribution labels and semantic phrases to the official 14 CRediT roles. It also checks variations in capitalization, punctuation and wording, while ensuring that unknown phrases are not incorrectly mapped.
 
 ### 3.5 test_taxonomy.py
 
@@ -168,13 +145,6 @@ Checks whether the application correctly retrieves and validates the official CR
 - Tests handling of network errors.
 - Tests handling of invalid taxonomy responses.
 
-**Simple explanation:**
-
-The application needs the official list of 14 CRediT roles. This test file checks whether the taxonomy data is complete, valid and correctly handled when retrieval fails.
-
-**Interview explanation:**
-
-The `test_taxonomy.py` file verifies the official CRediT taxonomy by checking role names and descriptions. It also tests missing roles, duplicate roles, invalid responses and network failures.
 
 ### 3.6 test_extraction_accuracy.py
 
@@ -194,14 +164,6 @@ Checks whether the extracted information is accurate and whether the original so
 - Checks whether unmatched-author diagnostics point to the correct source location.
 - Checks whether unknown structured roles retain their original source text and generate the expected diagnostic.
 
-**Simple explanation:**
-
-Extracting information is not enough. The application must also preserve the correct author, contribution, original text and location. This test file verifies that these details remain accurate.
-
-**Interview explanation:**
-
-The `test_extraction_accuracy.py` file verifies the accuracy of extracted information. It checks author-role associations, source locations, original text preservation and diagnostic locations to ensure that information is not incorrectly associated or lost.
-
 ### 3.7 test_failure_handling.py
 
 **Purpose:**
@@ -218,14 +180,6 @@ Checks whether the application handles unexpected errors and invalid inputs corr
 - Simulates an HTTP 503 error during taxonomy retrieval.
 - Simulates a CSV-writing failure.
 
-**Simple explanation:**
-
-Real-world applications may encounter corrupted files, network failures or output-writing problems. This test file checks whether the application handles these situations properly instead of crashing unexpectedly.
-
-**Interview explanation:**
-
-The `test_failure_handling.py` file tests different failure scenarios, including empty input directories, corrupted DOCX files, malformed XML, taxonomy HTTP errors and CSV-writing failures. It ensures that errors are handled and reported properly.
-
 ### 3.8 test_golden_output.py
 
 **Purpose:**
@@ -241,16 +195,6 @@ Checks whether the generated output matches a previously verified expected outpu
 - Detects duplicate records.
 - Checks output ordering where ordering is part of the expected result.
 - Checks whether the corrupted manuscript has the expected diagnostic.
-
-**Simple explanation:**
-
-We have a saved CSV containing the correct expected results. This test runs the application and compares its newly generated CSV with that saved file.
-
-If something changes in the code and the application starts producing incorrect results, the comparison detects the difference.
-
-**Interview explanation:**
-
-The `test_golden_output.py` file performs golden-output regression testing. It compares the generated CSV against a previously verified expected CSV to identify missing, extra, duplicate or changed records. This helps ensure that code changes do not break existing functionality.
 
 ### 3.9 test_main_integration.py
 
@@ -269,13 +213,6 @@ Checks whether all the major application components work together through the ma
 - Checks whether the command-line interface returns exit code 2 when taxonomy retrieval fails.
 - Checks whether the test report contains `status`, `validation_status` and diagnostic information.
 
-**Simple explanation:**
-
-The previous test files check individual parts of the application. This test file checks whether those parts work together when the complete application is executed.
-
-**Interview explanation:**
-
-The `test_main_integration.py` file performs integration testing of the main application. It verifies batch processing, CSV generation, output validation, failure handling and command-line exit codes.
 
 ## 4. Overall Test Execution Results
 
@@ -310,9 +247,6 @@ For example, if a developer changes a condition in the author-matching logic, mu
 - Mutation testing was therefore not executed.
 - No mutation score or killed/survived mutant count is available.
 
-**Interview explanation:**
-
-Mutation testing was configured using mutmut, but execution was blocked because WSL was unavailable in the Windows environment. Therefore, I have not reported a mutation score.
 
 ## 6. Important Testing Terminology
 
@@ -327,26 +261,3 @@ Mutation testing was configured using mutmut, but execution was blocked because 
 | Validation | Checking whether the extracted information meets the expected requirements. |
 | Test Coverage | The functionality or scenarios checked by the test suite. |
 
-## 7. Recommended Order for Understanding the Test Suite
-
-To understand the test files logically, follow the application's workflow:
-
-1. `test_structure.py`: Understand how the application reads DOCX files.
-2. `test_author_parser.py`: Understand how authors are identified.
-3. `test_contribution_parser.py`: Understand how contributions are extracted.
-4. `test_credit_normalizer.py`: Understand how contributions are mapped to CRediT roles.
-5. `test_taxonomy.py`: Understand how the official taxonomy is validated.
-6. `test_extraction_accuracy.py`: Understand how extraction accuracy is verified.
-7. `test_failure_handling.py`: Understand how errors are handled.
-8. `test_golden_output.py`: Understand how final output is compared against expected results.
-9. `test_main_integration.py`: Understand how the complete application is tested.
-
-**Final preparation advice:**
-
-For every test file, make sure you understand three things:
-
-1. What part of the application is being tested?
-2. What different scenarios are being checked?
-3. Why is testing that functionality important?
-
-You do not need to memorize every individual test. You need to understand what the test file is responsible for and explain it confidently.
