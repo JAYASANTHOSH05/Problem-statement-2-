@@ -1,0 +1,4 @@
+# Runtime code uses the Python 3.11+ standard library only.
+# Test dependency.
+pytest>=8,<10
+mutmut>=3.8,<4

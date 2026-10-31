@@ -1,0 +1,10 @@
+[tool.mutmut]
+source_paths = [
+  "author_parser.py",
+  "contribution_parser.py",
+  "credit_normalizer.py",
+  "docx_reader.py",
+  "main.py",
+  "taxonomy.py",
+]
+pytest_add_cli_args_test_selection = ["tests/"]
