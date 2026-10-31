@@ -56,3 +56,7 @@ python -m pytest -v
 ```
 
 The suite includes a deterministic golden-output regression fixture for all valid supplied manuscripts. Mutation testing is configured in `pyproject.toml`, but mutmut requires WSL on Windows.
+
+## Test Documentation
+
+See [Test Suite Documentation](TEST_SUITE_DOCUMENTATION.md) for the complete explanation of all nine test files, their scenarios, and interview explanations.
